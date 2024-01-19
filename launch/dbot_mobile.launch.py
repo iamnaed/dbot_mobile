@@ -1,8 +1,6 @@
 import os
-from ament_index_python.packages import get_package_share_directory
 from ament_index_python.packages import get_package_share_path
-from moveit_configs_utils import MoveItConfigsBuilder
-from moveit_configs_utils.launch_utils import add_debuggable_node, DeclareBooleanLaunchArg
+from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument, IncludeLaunchDescription
 from launch.conditions import IfCondition
@@ -44,11 +42,12 @@ def generate_launch_description():
         parameters=[
             {
                 "robot_description" : robot_description,
+                "use_sim_time" : True
             }
         ],
     )
 
-    # Rviz
+    # Rviz 
     # Run Rviz and load the default config to see the state of the move_group node
     rviz_config_path = get_package_share_path('dbot_mobile') / 'config/dbot_mobile_rviz.rviz'
     rviz2_node = Node(
@@ -57,12 +56,30 @@ def generate_launch_description():
             name='rviz2',
             output='screen',
             arguments=['-d', str(rviz_config_path)],
-            #parameters=[{'use_sim_time': False}]
-            parameters=[]
+            parameters=[{'use_sim_time': True}]
+            #parameters=[]
+    )
+
+    # Gazebo
+    # Include the Gazebo launch file, provided by the gazebo_ros package
+    # Run the spawner node from the gazebo_ros package. The entity name doesn't really matter if you only have a single robot.
+    gazebo_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            [os.path.join(get_package_share_directory('gazebo_ros'), 'launch', 'gazebo.launch.py')]
+        ),
+    )
+    
+    gazebo_spawn_entity = Node(
+        package='gazebo_ros', 
+        executable='spawn_entity.py',
+        arguments=['-topic', 'robot_description','-entity', 'dbot_mobile'],
+        output='screen',
     )
 
     # # Add nodes
     nodes.append(rsp_node)
     nodes.append(rviz2_node)
+    nodes.append(gazebo_launch)
+    nodes.append(gazebo_spawn_entity)
     
     return LaunchDescription(declared_arguments + nodes)
