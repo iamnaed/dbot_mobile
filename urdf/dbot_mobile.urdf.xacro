@@ -10,4 +10,10 @@
     <!-- Gazebo -->
     <xacro:include filename="dbot_mobile_gazebo_control.xacro"/>
 
+    <!-- Lidar -->
+    <xacro:include filename="lidar.xacro"/>
+
+    <!-- Lidar -->
+    <xacro:include filename="camera.xacro"/>
+
 </robot>
