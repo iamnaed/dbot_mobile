@@ -8,9 +8,7 @@
     <xacro:include filename="dbot_mobile_core.xacro"/>
 
     <!-- Gazebo/Ros2 Control -->
-    <!-- <xacro:include filename="dbot_mobile_gazebo.xacro"/> -->
-    <!-- <xacro:include filename="dbot_mobile_gazebo_ros2_control.xacro"/> -->
-    <xacro:include filename="dbot_mobile_fake_hardware_control.xacro"/>
+    <xacro:include filename="dbot_mobile_gazebo_ros2_control.xacro"/>
 
     <!-- Lidar -->
     <xacro:include filename="lidar.xacro"/>

@@ -29,7 +29,7 @@
             <geometry>
                 <box size="${chassis_l} ${chassis_w} ${chassis_h}"/>
             </geometry>
-            <material name="white"/>
+            <material name="orange"/>
         </visual>
         <collision>
             <origin xyz="${chassis_l/2} 0 ${chassis_h/2}"/>
@@ -43,7 +43,7 @@
     </link>
 
     <gazebo reference="chassis_link">
-        <material>Gazebo/White</material>
+        <material>Gazebo/Orange</material>
     </gazebo>
 
     <!-- Left Wheel Joint -->
