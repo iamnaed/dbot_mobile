@@ -2,3 +2,6 @@
 SLAM TOOLBOX
 sudo apt install ros-humble-slam-TOOLBOX
 
+[2]
+NAV2
+sudo apt install ros-humble-navigation2 ros-humble-nav2-bringup
